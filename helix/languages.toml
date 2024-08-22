@@ -1,0 +1,19 @@
+[[language]]
+name = "python"
+language-id = "python"
+scope = "source.python"
+injection-regex = "source.python"
+file-types = ["py"]
+shebangs = ["python", "python3", "python2"]
+auto-format = true
+language-servers = ["pylsp", "gpt"]
+indent = { tab-width = 4, unit = "\t" }
+text-width = 120
+
+[[language]]
+name = "php"
+language-servers = [ "phpactor", "gpt" ]
+
+[language-server.phpactor]
+command = "phpactor"
+args = [ "language-server" ]
