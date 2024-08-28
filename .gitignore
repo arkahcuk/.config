@@ -12,7 +12,6 @@
 !greenclip.toml
 
 !helix/
-!helix/**
 
 !i3/
 !i3/**
@@ -36,3 +35,6 @@
 !rofi/**
 
 !.zshrc
+
+!wallpapers/
+!wallpapers/**

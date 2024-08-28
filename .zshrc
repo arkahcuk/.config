@@ -93,6 +93,11 @@ else
 	export EDITOR='nvim'
 fi
 
+export LD_PRELOAD=""
+export PATH="$HOME/bin:/usr/lib/ccache/bin/:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/bin:/usr/bin/core_perl:/usr/games/bin:$HOME/.dotnet/tools:$PATH"
+export $(dbus-launch)
+eval $(thefuck --alias f)
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -142,12 +147,7 @@ bindkey '^[[1;5C' forward-word                                  #
 bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
 bindkey '^[[Z' undo                                             # Shift+tab undo last action
 
-export LD_PRELOAD=""
-#export EDITOR="vim"
-export PATH="$HOME/bin:/usr/lib/ccache/bin/:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/bin:/usr/bin/core_perl:/usr/games/bin:$HOME/.dotnet/tools:$PATH"
-
-setxkbmap -layout us,cz -variant ,ucw -option grp:switch
-#eval $(thefuck --alias f)
+# setxkbmap -layout us,cz -variant ,ucw -option grp:switch
 
 # functions
 cl() {
@@ -176,6 +176,7 @@ alias rs="redshift &"
 alias btc="bluetoothctl"
 alias down="nmcli device disconnect wlan0"
 alias brb="i3lock -efki ~/Pictures/Wallpapers/lockscreen.png && sudo zzz -z"
+# sudo /bin/nvidia-sleep.sh hibernate && sudo loginctl hibernate
 alias :wq="exit"
 alias mps="mplayer -nosound"
 alias pip="python3 -m pip"
