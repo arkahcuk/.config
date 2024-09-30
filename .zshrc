@@ -1,3 +1,4 @@
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -72,6 +73,7 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	git
+  httpie
 	sudo
 	z
 	zsh-autosuggestions
@@ -119,8 +121,11 @@ zstyle ':completion:*' format '>>> %d'
 compinit
 _comp_options+=(globdots) # hidden files are included
 
-# Keybindings section
-bindkey "^[k" autosuggest-execute				# Alt+k to accept autosuggestion
+
+# ------------------#
+#    keybindings    #
+# ------------------#
+bindkey "^[k" autosuggest-execute                               # Alt+k to accept autosuggestion
 bindkey -e
 bindkey '^[[7~' beginning-of-line                               # Home key
 bindkey '^[[H' beginning-of-line                                # Home key
@@ -128,7 +133,7 @@ if [[ "${terminfo[khome]}" != "" ]]; then
   bindkey "${terminfo[khome]}" beginning-of-line                # [Home] - Go to beginning of line
 fi
 bindkey '^[[8~' end-of-line                                     # End key
-bindkey '^[[F' end-of-line                                     # End key
+bindkey '^[[F' end-of-line                                      # End key
 if [[ "${terminfo[kend]}" != "" ]]; then
   bindkey "${terminfo[kend]}" end-of-line                       # [End] - Go to end of line
 fi
@@ -147,89 +152,76 @@ bindkey '^[[1;5C' forward-word                                  #
 bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
 bindkey '^[[Z' undo                                             # Shift+tab undo last action
 
-# setxkbmap -layout us,cz -variant ,ucw -option grp:switch
 
-# functions
-cl() {
-	cd "${1:-$HOME}" && ls --color
-}
-rl() {
-	rm "$1" && ls --color
-}
+# ------------------#
+#     functions     #
+# ------------------#
+cl() { cd $1 && ls --color; }
+ck() { cd $1 && ls --color; }
+rl() { rm $1 && ls --color; }
+sz() { du -h --max-depth=1 "${1:-./}" | sort -rh | head -n 11; }
+sa() { eval `ssh-agent`; KEY=${1:-~/.ssh/gw_key};	ssh-add $KEY; }
+vol() { amixer set Master $1%; }
 jas() {
-	xrandr --output eDP-1 --brightness $1
-}
-sa() {
-	eval `ssh-agent`
-	KEY=${1:-~/.ssh/gw_key}
-	ssh-add $KEY
-}
-sz() {
-	du -h --max-depth=1 "${1:-./}" | sort -rh | head -n 11
-}
+  xrandr \
+    --output $(xrandr --listactivemonitors | tail -n 1 | xargs | cut -d " " -f 4) \
+    --brightness $1 
+  }
 
-# alias
-alias ip="ip -c"
-alias path="echo $PATH | tr ':' '\n'"
-alias zrc="nvim ~/.zshrc"
+# ------------------#
+#      aliases      #
+# ------------------#
+alias keyboard="setxkbmap -layout us,cz -variant ,ucw -option grp:switch"
+alias calendar="khal calendar"
+alias weather="curl wttr.in"
+alias camera='qv4l2 &!'
+# ----------------- #
+alias yay="paru"
+alias htop="btop"
+alias docker="podman"
+# ----------------- #
+alias mps="mplayer -nosound"
+alias fh="feh"
+alias vivaldi="vivaldi-snapshot"
+alias viv="nohup vivaldi-snapshot &> ~/.temp/nohup &!"
 alias rs="redshift &"
+alias prolog="swipl"
+alias hx="helix"
 alias btc="bluetoothctl"
 alias down="nmcli device disconnect wlan0"
-alias brb="i3lock -efki ~/Pictures/Wallpapers/lockscreen.png && sudo zzz -z"
-# sudo /bin/nvidia-sleep.sh hibernate && sudo loginctl hibernate
-alias :wq="exit"
-alias mps="mplayer -nosound"
 alias pip="python3 -m pip"
 alias odump="objdump -d a.out"
-alias token="cat ~/Documents/token"
-
-alias gogen="echo 'E8:07:BF:04:05:F7'"
-alias gl="git ll | head -n 5 | tac"
 alias gs="git status"
-alias keyboard="setxkbmap -layout us,cz -variant ,ucw -option grp:switch"
-alias htop="btop"
-
-alias hx="helix"
-alias tb="nohup thunderbird &> ~/.temp/nohup &!"
-alias ff="nohup firefox &> ~/.temp/nohup &!"
-alias viv="nohup vivaldi-snapshot &> ~/.temp/nohup &!"
-alias vivaldi="vivaldi-snapshot"
-alias prolog="swipl"
-alias phpstorm='nohup /home/lika/Mounts/D/Programs/PhpStorm-232.10072.32/bin/phpstorm.sh &> ~/.temp/nohup &!'
-alias webstorm='nohup /home/lika/Programs/WebStorm-233.13135.92/bin/webstorm.sh &> ~/.temp/nohup &!'
-alias pycharm='nohup /home/lika/Mounts/D/Programs/pycharm-2023.3/bin/pycharm.sh &> ~/.temp/nohup &!'
-alias idea='/home/lika/Mounts/D/Programs/idea-IU-232.9921.47/bin/idea.sh &!'
-alias rider='/home/lika/Mounts/D/Programs/JetBrains\ Rider-2023.3.4/bin/rider.sh &!'
-alias cursor='/home/lika/Programs/cursor*.AppImage &> ~/.temp/nohup &!'
-alias camera='qv4l2 &!'
+alias :wq="exit"
+alias ls7="ls"
+alias cd..="cd .."
+alias sl="ls --color=auto"
+# ----------------- #
+alias ip="ip -c"
+alias ls="ls --color=auto"
+alias grep="grep --color=auto"
+alias df="df -h"
+alias free="free -h"
+alias du="du -h"
+# ----------------- #
+alias wp="~/Skripty/.wp.sh"
+alias brb="i3lock -efki ~/Pictures/Wallpapers/lockscreen.png && sudo zzz -z"
+# sudo /bin/nvidia-sleep.sh hibernate && sudo loginctl hibernate
+# ----------------- #
+alias zrc="nvim ~/.zshrc"
 alias games='nvim ~/Notes/games'
-
-alias mountd="sudo mount -t ntfs3 /dev/sda5 ~/Mounts/D"
-alias umountd="sudo umount ~/Mounts/D"
-alias mounte="sudo mount /dev/sda6 ~/Mounts/E"
-alias umounte="sudo umount ~/Mounts/E"
-
+alias token="cat ~/Documents/token"
+alias gogen="echo 'E8:07:BF:04:05:F7'"
+alias path="echo $PATH | tr ':' '\n'"
 alias ok="echo 'K.'"
 alias kdo="echo 'se ptal?'"
 alias cool="echo 'ikr?'"
-
-alias ls7="ls"
-alias yay="paru"
+# ----------------- #
+alias mountd="sudo mount -t ntfs3 /dev/sd?5 ~/Mounts/D"
+alias umountd="sudo umount ~/Mounts/D"
+alias mounte="sudo mount /dev/sd?6 ~/Mounts/E"
+alias umounte="sudo umount ~/Mounts/E"
+# ----------------- #
 alias reboot="sudo reboot"
 alias shutdown="sudo poweroff"
 alias poweroff="sudo poweroff"
-alias c="clear"
-alias cd..="cd .."
-alias sl="ls --color=auto"
-alias vi="vim"
-alias ls="ls --color=auto"
-alias dir="dir --color=auto"
-alias vdir="vdir --color=auto"
-alias grep="grep --color=auto"
-alias fgrep="fgrep --color=auto"
-alias egrep="egrep --color=auto"
-alias df="df -h"                          # human-readable sizes
-alias free="free -h"
-alias du="du -h"
-alias shred="shred -zf"
-

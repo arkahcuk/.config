@@ -3,8 +3,13 @@
 
 ---@type ChadrcConfig
 local M = {}
+
+M.base46 = {
+  theme = "red",
+}
+
 M.ui = {
-   theme = "dark_horizon",
+   theme = "red",
    hl_override = {
       Comment = { italic = true },
       ["@comment"] = { italic = true },
